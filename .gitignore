@@ -1,0 +1,11 @@
+# Maven / Java
+target/
+*.iml
+*.class
+.idea/
+*.log
+*.ipr
+*.iws
+.DS_Store
+*.swp
+out/
