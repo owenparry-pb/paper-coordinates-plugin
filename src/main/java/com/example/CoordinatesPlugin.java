@@ -1,4 +1,4 @@
-package com.example;
+package com.coordinatesplugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
