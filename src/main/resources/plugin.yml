@@ -1,6 +1,8 @@
 name: CoordinatesPlugin
 main: com.parryproject.CoordinatesPlugin
-version: 1.0
+version: 1.1
 api-version: 1.20
-description: Displays player coordinates in the Action Bar.
-author: owenparry-pb
+commands:
+  coords:
+    description: Enable or disable coordinates display on your screen
+    usage: /coords <on|off>
