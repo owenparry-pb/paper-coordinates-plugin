@@ -11,6 +11,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +30,9 @@ public class CoordinatesPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        // --- UPDATE CHECK: runs automatically on server/plugin start ---
+        runUpdateCheck();
+
         // Register event listener
         getServer().getPluginManager().registerEvents(this, this);
 
@@ -53,6 +64,34 @@ public class CoordinatesPlugin extends JavaPlugin implements Listener {
                 }
             }
         }.runTaskTimer(this, 0, 20);
+    }
+
+    // --- Update Check Logic ---
+    private void runUpdateCheck() {
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                // Change the repo owner/name below if your repo is different!
+                URL url = new URL("https://api.github.com/repos/parryproject/coordinatesplugin/releases/latest");
+                try (InputStream is = url.openStream();
+                     JsonReader reader = Json.createReader(is)) {
+                    JsonObject release = reader.readObject();
+                    String latest = release.getString("tag_name");
+                    logUpdateCheck(latest);
+                }
+            } catch (Exception e) {
+                logUpdateCheck("Update check failed: " + e.getMessage());
+            }
+        });
+    }
+
+    private void logUpdateCheck(String latestVersion) {
+        String logEntry = "Update check at " + LocalDateTime.now() + ": Latest version/tag is " + latestVersion + System.lineSeparator();
+        try {
+            Files.write(Paths.get(getDataFolder().getAbsolutePath(), "update-check.log"), logEntry.getBytes(),
+                        StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            getLogger().warning("Could not log update check: " + e.getMessage());
+        }
     }
 
     @EventHandler
