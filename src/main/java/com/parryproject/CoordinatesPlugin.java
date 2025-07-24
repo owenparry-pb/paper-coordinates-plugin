@@ -40,6 +40,7 @@ public class CoordinatesPlugin extends JavaPlugin implements Listener {
         if (!getDataFolder().exists()) {
             getDataFolder().mkdirs();
         }
+        saveResource("config.yaml", false); // Ensures config.yaml is present
         // Checks for updated version of Plugin
         runUpdateCheck();
 
