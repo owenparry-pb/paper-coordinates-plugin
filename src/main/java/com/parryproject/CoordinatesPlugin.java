@@ -36,6 +36,11 @@ public class CoordinatesPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        // Ensure data folder exists before anything else
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdirs();
+        }
+        // Checks for updated version of Plugin
         runUpdateCheck();
 
         getServer().getPluginManager().registerEvents(this, this);
