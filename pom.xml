@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.parryproject</groupId>
     <artifactId>paper-coordinates-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>CoordinatesPlugin</name>
     <description>Displays player coordinates in the Action Bar.</description>
     <repositories>
